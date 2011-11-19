@@ -1,0 +1,14 @@
+"id","code","name","parent_id:id","sign","domain","tax_discount","tax_include"
+"tax_code_chart_root","","Códigos de Impostos Brasileiros","","1","",False,False
+"tax_code_1","ICMS","ICMS Interno","tax_code_chart_root","1","icms",True,True
+"tax_code_2","ICMS","ICMS Externo","tax_code_chart_root","1","icms",True,True
+"tax_code_3","ICMS Subist","ICMS Subist","tax_code_chart_root","1","icmsst",True,True
+"tax_code_4","IPI","IPI","tax_code_chart_root","1","ipi",True,False
+"tax_code_5","PIS","PIS","tax_code_chart_root","1","pis",True,True
+"tax_code_6","COFINS","COFINS","tax_code_chart_root","1","cofins",True,True
+"tax_code_7","IRPJ","IRPJ","tax_code_chart_root","1","irpj",True,True
+"tax_code_8","IR","IR","tax_code_chart_root","1","ir",True,True
+"tax_code_9","ISS","ISS","tax_code_chart_root","1","iss",True,False
+"tax_code_10","CSLL","CSLL","tax_code_chart_root","1","csll",True,True
+
+

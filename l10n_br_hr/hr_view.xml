@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_l10n_br_employee_form" model="ir.ui.view">
+      <field name="name">l10n_br_hr.employee.form</field>
+      <field name="model">hr.employee</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <group col="2" colspan="2" groups="base.group_hr_user" position="replace"/>
+          <group col="2" colspan="2" groups="base.group_hr_user" position="before">
+            <group col="8" colspan="6" groups="base.group_hr_user">
+              <separator colspan="8" string="Social IDs"/>
+              <field name="rg"/>
+              <field name="rg_data"/>
+              <field name="rg_orgao"/>
+              <field name="rg_state_id"/>
+              <newline/>
+              <field name="cpf" on_change="on_change_cpf(cpf)" colspan="4"/>
+              <newline/>
+              <field name="ctps" colspan="4"/>
+              <field name="ctps_serie"/>
+              <field name="ctps_state_id"/>
+              <newline/>
+              <field name="pis" on_change="on_change_pis(pis)" colspan="4"/>
+              <field name="pis_date"/>
+              <newline/>
+              <field name="tit_eleitor" on_change="on_change_tit_eleitor(tit_eleitor)" colspan="4"/>
+              <field name="zona_eleitoral"/>
+              <field name="secao"/>
+              <newline/>
+              <field name="cnh" colspan="4"/>
+              <field name="cnh_categoria"/>
+              <field name="cnh_state_id"/>
+              <newline/>
+              <field name="reservista" on_change="on_change_reservista(reservista)" colspan="4"/>
+            </group>
+          </group>
+        </data>
+      </field>
+    </record>
+  </data>
+</openerp>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="view_boleto_company_form">
+      <field name="name">boleto.company</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form" />
+      <field name="arch" type="xml">
+        <page position="after" string="NFse">
+          <page position="after" string="Boletos">
+            <field name="banco" />
+            <field name="agencia_cedente" />
+            <field name="conta_cedente" />
+          </page>
+        </page>
+      </field>
+    </record>
+  </data>
+</openerp>

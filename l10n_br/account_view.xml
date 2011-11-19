@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- include domain field em account.tax.code and account.tax.code.template from -->
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_code_form">
+			<field name="name">l10n_br_account.tax.code.form</field>
+			<field name="model">account.tax.code</field>
+			<field name="inherit_id" ref="account.view_tax_code_form"/>
+			<field name="arch" type="xml">
+				<field position="after" name="parent_id">
+					<field name="domain"/>
+					<field name="tax_discount" />
+					<field name="tax_include"/>
+			    </field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_l10n_br_accout_tax_code_template_form">
+			<field name="name">l10n_br_account.tax.code.template.form</field>
+			<field name="model">account.tax.code.template</field>
+			<field name="inherit_id" ref="account.view_tax_code_template_form"/>
+			<field name="arch" type="xml">
+				<field position="after" name="parent_id">
+					<field name="domain"/>
+					<field name="tax_discount" />
+					<field name="tax_include"/>
+			    </field>
+			</field>
+		</record>
+
+		<!-- Incluir o campo desconto do imposto -->
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_template_form">
+			<field name="name">l10n_br_account.tax.template.form</field>
+			<field name="model">account.tax.template</field>
+			<field name="inherit_id" ref="account.view_account_tax_template_form"/>
+			<field name="arch" type="xml">
+				<field name="price_include" position="replace"/>
+			<field name="type_tax_use" position="after">
+				<field name="price_include"/>
+			</field>
+				<field position="after" name="price_include">
+					<field groups="base.group_extended" name="tax_discount"/>
+			    </field>			    			    
+			    <field position="after" name="tax_discount">
+			    	<group colspan="6" col="6">
+			    		<field groups="base.group_extended" name="tax_add"/>
+			    		<field groups="base.group_extended" name="tax_include"/>
+			    		<field groups="base.group_extended" name="tax_retain"/>
+			    	</group>
+			    </field>			    	
+			    <field position="before" name="tax_add">
+			    	<newline/>
+			    	<separator colspan="6" string="Tax Aplication Method"/>
+			    	<newline/>
+			    </field>
+			    <field position="before" name="price_include">
+			    	<newline/>
+					<separator colspan="6" string="Tax Calc Method"/>
+					<newline/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_form">
+			<field name="name">l10n_br_account.tax.form</field>
+			<field name="model">account.tax</field>
+			<field name="inherit_id" ref="account.view_tax_form"/>
+			<field name="arch" type="xml">
+				<field name="price_include" position="replace"/>
+			<field name="active" position="after">
+				<field name="price_include"/>
+			</field>
+				<field position="after" name="price_include">
+					<field groups="base.group_extended" name="tax_discount"/>
+			    </field>			    			    
+			    <field position="after" name="tax_discount">
+			    	<group colspan="6" col="6">
+			    		<field groups="base.group_extended" name="tax_add"/>
+			    		<field groups="base.group_extended" name="tax_include"/>
+			    		<field groups="base.group_extended" name="tax_retain"/>
+			    	</group>
+			    </field>			    	
+			    <field position="before" name="tax_add">
+			    	<newline/>
+			    	<separator colspan="6" string="Tax Aplication Method"/>
+			    	<newline/>
+			    </field>
+			    <field position="before" name="price_include">
+			    	<newline/>
+					<separator colspan="6" string="Tax Calc Method"/>
+					<newline/>
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_template_form1">
+			<field name="name">l10n_br_account.tax.template.form1</field>
+			<field name="model">account.tax.template</field>
+			<field name="inherit_id" ref="account.view_account_tax_template_form"/>
+			<field name="arch" type="xml">
+				<field position="after" name="amount">
+					<field groups="base.group_extended" name="base_reduction"/>
+					<field groups="base.group_extended" name="amount_mva"/>
+			    </field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_form1">
+			<field name="name">l10n_br_account.tax.form1</field>
+			<field name="model">account.tax</field>
+			<field name="inherit_id" ref="account.view_tax_form"/>
+			<field name="arch" type="xml">
+				<field position="after" name="amount">
+					<field groups="base.group_extended" name="base_reduction"/>
+					<field groups="base.group_extended" name="amount_mva"/>
+			    </field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_form2">
+			<field name="name">l10n_br_account.tax.form2</field>
+			<field name="model">account.tax</field>
+			<field name="inherit_id" ref="account.view_tax_form"/>
+			<field name="arch" type="xml">
+				<field name="tax_code_id" position="replace" >
+					<field name="tax_code_id" on_change="onchange_tax_code_id(tax_code_id)" />
+			    </field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_l10n_br_account_tax_template_form2">
+			<field name="name">l10n_br_account.tax.template.form2</field>
+			<field name="model">account.tax.template</field>
+			<field name="inherit_id" ref="account.view_account_tax_template_form"/>
+			<field name="arch" type="xml">
+				<field name="tax_code_id" position="replace" >
+					<field name="tax_code_id" on_change="onchange_tax_code_id(tax_code_id)" />
+			    </field>
+			</field>
+		</record>
+
+        <record id="view_l10n_br_journal_form_inherit" model="ir.ui.view">
+           <field name="name">l10n_br.journal.form.inherit</field>
+           <field name="model">account.journal</field>
+           <field name="type">form</field>
+           <field name="inherit_id" ref="account.view_account_journal_form"/>
+           <field name="arch" type="xml">
+                <field name="sequence_id" position="after">
+                    <field name="internal_sequence"/>
+                </field>
+           </field>
+        </record>
+
+	</data>
+	
+</openerp>
+
