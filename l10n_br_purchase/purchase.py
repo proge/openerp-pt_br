@@ -51,7 +51,6 @@ class purchase_order(osv.osv):
                 'purchase.order.line': (_get_order, None, 10),
                 }, multi="sums", help="The total amount"),
         }
-
     _defaults = {
         'invoice_method': 'picking',
         }
@@ -205,8 +204,8 @@ class purchase_order_line(osv.osv):
     def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,
             partner_id, date_order=False, fiscal_position=False, date_planned=False,
             name=False, price_unit=False, notes=False, fiscal_operation_category_id=False, fiscal_operation_id=False):
-
-        result = super(purchase_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty, uom,
+        result = super(purchase_order_line, self).product_id_change(
+            cr, uid, ids, pricelist, product, qty, uom,
             partner_id, date_order, fiscal_position, date_planned, name, price_unit, notes)
 
         if fiscal_operation_category_id:
