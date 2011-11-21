@@ -10,7 +10,6 @@ def test_services_sale_to_invoice(oerp):
 
     assert prod_fc_obj.browse(oerp.cr, 1, [prod_fc_id])[0].id == prod_fc_id
 
-
     # create service fiscal operation category
     cfop_obj = oerp.pool.get('l10n_br_account.cfop')
     cfop_id = cfop_obj.search(oerp.cr, 1, [])[0]
@@ -29,7 +28,6 @@ def test_services_sale_to_invoice(oerp):
 
     assert fopc_obj.browse(oerp.cr, 1, [fopc_id])[0].id == fopc_id
 
-
     # create service fiscal operation
     fop_obj = oerp.pool.get('l10n_br_account.fiscal.operation')
     fop_id = fop_obj.create(oerp.cr, 1, {
@@ -45,7 +43,6 @@ def test_services_sale_to_invoice(oerp):
         })
 
     assert fop_obj.browse(oerp.cr, 1, [fop_id])[0].id == fop_id
-
 
     # create service template
     prod_obj = oerp.pool.get('product.product')
@@ -73,7 +70,6 @@ def test_services_sale_to_invoice(oerp):
         })
 
     assert prod_obj.browse(oerp.cr, 1, [prod_id])[0].id == prod_id
-
 
     # create ISS tax code with tax_include
     tax_code_obj = oerp.pool.get('account.tax.code')
@@ -125,7 +121,6 @@ def test_services_sale_to_invoice(oerp):
 
     assert partner_client_obj.browse(oerp.cr, 1, [partner_client_id])[0].id == partner_client_id
 
-
     # create client partner address
     partner_client_address_obj = oerp.pool.get('res.partner.address')
     partner_client_address_id = partner_client_address_obj.create(oerp.cr, 1, {
@@ -146,28 +141,6 @@ def test_services_sale_to_invoice(oerp):
         })
 
     assert partner_client_address_obj.browse(oerp.cr, 1, [partner_client_address_id])[0].id == partner_client_address_id
-
-
-    # create fiscal position
-#    fp_obj = oerp.pool.get('account.fiscal.position')
-#    fp_id = fp_obj.create(oerp.cr, 1, {
-#        'name': '',
-#        'fiscal_operation_id': fop_id
-#        })
-
-#    assert fp_obj.browse(oerp.cr, 1, [fp_id])[0].id == fp_id
-
-
-    # create fiscal position with above taxes
-#    fpt_obj = oerp.pool.get('account.fiscal.position.tax')
-#    fpt_id = fpt_obj.create(oerp.cr, 1, {
-#        'position_id': fp_id,
-#        'tax_src_id': '',
-#        'tax_dest_id': ''
-#        })
-
-#    assert fpt_obj.browse(oerp.cr, 1, [fpt_id])[0].id == fpt_id
-
 
     # create sale order with above data
     sale_order_obj = oerp.pool.get('sale.order')
@@ -199,5 +172,4 @@ def test_services_sale_to_invoice(oerp):
 
     assert sale_order_obj.browse(oerp.cr, 1, [order_id])[0].id == order_id
 
-
-    # create_invoice with above sale order
+    # TODO create_invoice with above sale order

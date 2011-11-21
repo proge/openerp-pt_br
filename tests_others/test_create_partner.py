@@ -13,7 +13,6 @@ def test_create_partner_client(oerp):
 
     assert partner_client_obj.browse(oerp.cr, 1, [partner_client_id])[0].id == partner_client_id
 
-
     # create client partner address
     partner_client_address_obj = oerp.pool.get('res.partner.address')
     partner_client_address_id = partner_client_address_obj.create(oerp.cr, 1, {

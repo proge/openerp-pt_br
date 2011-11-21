@@ -1,8 +1,8 @@
 from fake_openerp import monkey_patch
 monkey_patch()
 
-import l10n_br_base
 from osv.osv import get_object
+
 
 class TestPartner(object):
     @classmethod
@@ -17,4 +17,3 @@ class TestPartner(object):
         assert self.p.validate_cpf('887.687.331-78')
         assert self.p.validate_cpf('64785949120')
         assert self.p.validate_cpf('58790082583')
-
