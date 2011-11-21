@@ -1,31 +1,12 @@
 # -*- encoding: utf-8 -*-
-#################################################################################
-#                                                                               #
-# Copyright (C) 2009  Renato Lima - Akretion                                    #
-#                                                                               #
-#This program is free software: you can redistribute it and/or modify           #
-#it under the terms of the GNU General Public License as published by           #
-#the Free Software Foundation, either version 3 of the License, or              #
-#(at your option) any later version.                                            #
-#                                                                               #
-#This program is distributed in the hope that it will be useful,                #
-#but WITHOUT ANY WARRANTY; without even the implied warranty of                 #
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                  #
-#GNU General Public License for more details.                                   #
-#                                                                               #
-#You should have received a copy of the GNU General Public License              #
-#along with this program.  If not, see <http://www.gnu.org/licenses/>.          #
-#################################################################################
 
 from osv import osv, fields
 
-#################################################################################
-# CFOP - Código Fiscal de Operações e Prestações
-#################################################################################
+
 class l10n_br_account_cfop(osv.osv):
     _description = 'CFOP - Código Fiscal de Operações e Prestações'
     _name = 'l10n_br_account.cfop'
-    
+
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
         if not args:
             args = []
@@ -33,7 +14,7 @@ class l10n_br_account_cfop(osv.osv):
             context = {}
         ids = self.search(cr, user, ['|',('name',operator,name),('code',operator,name)] + args, limit=limit, context=context)
         return self.name_get(cr, user, ids, context)
-    
+
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
             return []
@@ -42,7 +23,7 @@ class l10n_br_account_cfop(osv.osv):
         reads = self.read(cr, uid, ids, ['name','code'], context, load='_classic_write')
         return [(x['id'], (x['code'] and x['code'] or '') + (x['name'] and ' - ' + x['name'] or '')) \
                 for x in reads]
-            
+
     _columns = {
         'code': fields.char('Código', size=4, requeried=True),
         'name': fields.char('Nome', size=256, requeried=True),
@@ -59,9 +40,7 @@ class l10n_br_account_cfop(osv.osv):
 
 l10n_br_account_cfop()
 
-################################################################################
-# Cadastro de Tabelas de Serviços
-#################################################################################
+
 class l10n_br_account_service_type(osv.osv):
     _name = 'l10n_br_account.service.type'
     _description = 'Cadastro de Operações Fiscais de Serviço'
@@ -78,7 +57,7 @@ class l10n_br_account_service_type(osv.osv):
     _defaults = {
                  'internal_type': 'normal',
                  }
-    
+
     def name_get(self, cr, uid, ids, context=None):
         if not ids:
             return []
@@ -93,9 +72,7 @@ class l10n_br_account_service_type(osv.osv):
 
 l10n_br_account_service_type()
 
-#################################################################################
-# Tipo de Documento Fiscal
-#################################################################################
+
 class l10n_br_account_fiscal_document(osv.osv):
     _name = 'l10n_br_account.fiscal.document'
     _description = 'Tipo de Documento Fiscal'
@@ -106,9 +83,7 @@ class l10n_br_account_fiscal_document(osv.osv):
     }
 l10n_br_account_fiscal_document()
 
-#################################################################################
-# Código de Situação Tributária
-#################################################################################
+
 class l10n_br_account_cst(osv.osv):
     _name = 'l10n_br_account.cst'
     _description = 'Código de Situação Tributária'
@@ -117,7 +92,7 @@ class l10n_br_account_cst(osv.osv):
                 'name': fields.char('Descrição', size=64),
                 'tax_code_id': fields.many2one('account.tax.code', 'Modelo do Imposto',required=True),
                 }
-    
+
     def name_get(self, cr, uid, ids, context=None):
         if not ids:
             return []
@@ -129,7 +104,7 @@ class l10n_br_account_cst(osv.osv):
                 name = record['code'] + ' - '+name
             res.append((record['id'], name))
         return res
-    
+
 l10n_br_account_cst()
 
 #################################################################################
@@ -155,9 +130,7 @@ class l10n_br_account_fiscal_operation_category(osv.osv):
     }
 l10n_br_account_fiscal_operation_category()
 
-#################################################################################
-# Operações Fiscais
-#################################################################################
+
 class l10n_br_account_fiscal_operation(osv.osv):
     _name = 'l10n_br_account.fiscal.operation'
     _description = 'Operações fiscais'
@@ -187,9 +160,7 @@ class l10n_br_account_fiscal_operation(osv.osv):
 
 l10n_br_account_fiscal_operation()
 
-#################################################################################
-# Linhas das Operações fiscais
-#################################################################################
+
 class l10n_br_account_fiscal_operation_line(osv.osv):
     _name = 'l10n_br_account.fiscal.operation.line'
     _description = 'Linhas das operações ficais'
@@ -203,9 +174,7 @@ class l10n_br_account_fiscal_operation_line(osv.osv):
 
 l10n_br_account_fiscal_operation_line()
 
-#################################################################################
-# Serie de Documentos Fiscais
-#################################################################################
+
 class l10n_br_account_document_serie(osv.osv):
     _name = 'l10n_br_account.document.serie'
     _description = 'Serie de documentos fiscais'
@@ -223,41 +192,36 @@ class l10n_br_account_document_serie(osv.osv):
 
 l10n_br_account_document_serie()
 
-################################################################################
-# Tipo Fiscal de Parceiros
-#################################################################################
+
 class l10n_br_account_partner_fiscal_type(osv.osv):
     _name = 'l10n_br_account.partner.fiscal.type'
     _description = 'Tipo Fiscal de Parceiros'
     _columns = {
-                'code': fields.char('Código', size=16, required=True),
-                'name': fields.char('Descrição', size=64),
-                'tipo_pessoa': fields.selection([('F', 'Física'), ('J', 'Jurídica')], 'Tipo de pessoa', required=True),
-                'icms': fields.boolean('Recupera ICMS'),
-                'ipi':fields.boolean('Recupera IPI'), 
-                }
+        'code': fields.char('Código', size=16, required=True),
+        'name': fields.char('Descrição', size=64),
+        'tipo_pessoa': fields.selection([('F', 'Física'), ('J', 'Jurídica')], 'Tipo de pessoa', required=True),
+        'icms': fields.boolean('Recupera ICMS'),
+        'ipi': fields.boolean('Recupera IPI'),
+        }
 
 l10n_br_account_partner_fiscal_type()
 
-################################################################################
-# Cadastro de CNAE
-#################################################################################
+
 class l10n_br_account_cnae(osv.osv):
     _name = 'l10n_br_account.cnae'
     _description = 'Cadastro de CNAE'
     _columns = {
-                'code': fields.char('Código', size=16, required=True),
-                'name': fields.char('Descrição', size=64, required=True),
-                'version': fields.char('Versão', size=16, required=True),
-                'parent_id': fields.many2one('l10n_br_account.cnae', 'CNAE Pai'),
-                'child_ids': fields.one2many('l10n_br_account.cnae', 'parent_id', 'CNAEs Filhos'),
-                'internal_type': fields.selection([('view', 'Visualização'), ('normal', 'Normal')], 'Tipo Interno', required=True),
-                }
+        'code': fields.char('Código', size=16, required=True),
+        'name': fields.char('Descrição', size=64, required=True),
+        'version': fields.char('Versão', size=16, required=True),
+        'parent_id': fields.many2one('l10n_br_account.cnae', 'CNAE Pai'),
+        'child_ids': fields.one2many('l10n_br_account.cnae', 'parent_id', 'CNAEs Filhos'),
+        'internal_type': fields.selection([('view', 'Visualização'), ('normal', 'Normal')], 'Tipo Interno', required=True),
+        }
     _defaults = {
-                 'internal_type': 'normal',
-                 }
-    
-    
+        'internal_type': 'normal',
+        }
+
     def name_get(self, cr, uid, ids, context=None):
         if not ids:
             return []
@@ -266,10 +230,8 @@ class l10n_br_account_cnae(osv.osv):
         for record in reads:
             name = record['name']
             if record['code']:
-                name = record['code'] + ' - '+name
+                name = record['code'] + ' - ' + name
             res.append((record['id'], name))
         return res
 
 l10n_br_account_cnae()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

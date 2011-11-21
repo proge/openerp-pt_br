@@ -1,24 +1,8 @@
 # -*- coding: utf-8 -*-
-#################################################################################
-#                                                                               #
-# Copyright (C) 2009  Renato Lima - Akretion                                    #
-#                                                                               #
-#This program is free software: you can redistribute it and/or modify           #
-#it under the terms of the GNU General Public License as published by           #
-#the Free Software Foundation, either version 3 of the License, or              #
-#(at your option) any later version.                                            #
-#                                                                               #
-#This program is distributed in the hope that it will be useful,                #
-#but WITHOUT ANY WARRANTY; without even the implied warranty of                 #
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                  #
-#GNU General Public License for more details.                                   #
-#                                                                               #
-#You should have received a copy of the GNU General Public License              #
-#along with this program.  If not, see <http://www.gnu.org/licenses/>.          #
-#################################################################################
 
 from osv import osv, fields
 import base64
+
 
 class l10n_br_account_nfe_export(osv.osv_memory):
     """ Exportar Nota Fiscal Eletrônica """
@@ -26,39 +10,34 @@ class l10n_br_account_nfe_export(osv.osv_memory):
     _name = "l10n_br_account.nfe_export"
     _description = "Exportação de Nota Fiscal Eletrônica"
     _inherit = "ir.wizard.screen"
-
     _columns = {
         'file': fields.binary('Arquivo', readonly=True),
         'company_id': fields.many2one('res.company', 'Company'),
-        'file_type': fields.selection([('xml','XML'),('txt','TXT')], 'Tipo do Arquivo'),
+        'file_type': fields.selection([('xml', 'XML'), ('txt', 'TXT')], 'Tipo do Arquivo'),
         'import_status_draft': fields.boolean('Importar NFs com status em rascunho'),
-        'state':fields.selection([('init','init'),('done','done')], 'state', readonly=True),
-    }
-
+        'state': fields.selection([('init', 'init'), ('done', 'done')], 'state', readonly=True),
+        }
     _defaults = {
         'state': 'init',
-        'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'account.invoice', context=c),
+        'company_id': lambda self, cr, uid, c: self.pool.get('res.company')._company_default_get(cr, uid, 'account.invoice', context=c),
         'file_type': 'txt',
         'import_status_draft': False,
-    }
+        }
 
     def nfe_export(self, cr, uid, ids, context=None):
-        
         data = self.read(cr, uid, ids, [], context=context)[0]
-        
+
         inv_obj = self.pool.get('account.invoice')
-        inv_ids = inv_obj.search(cr, uid, [('state','=','sefaz_export'),('nfe_export_date','=',False),('company_id','=',data['company_id']),('own_invoice','=',True)])
-         
+        inv_ids = inv_obj.search(cr, uid, [('state', '=', 'sefaz_export'), ('nfe_export_date', '=', False), ('company_id', '=', data['company_id']), ('own_invoice', '=', True)])
+
         if data['file_type'] == 'xml':
             file = inv_obj.nfe_export_xml(cr, uid, inv_ids)
         else:
             file = inv_obj.nfe_export_txt(cr, uid, inv_ids)
         file_total = file
-        
+
         self.write(cr, uid, ids, {'file': base64.b64encode(file_total), 'state': 'done'}, context=context)
-        
+
         return False
 
 l10n_br_account_nfe_export()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

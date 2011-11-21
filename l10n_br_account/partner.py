@@ -19,31 +19,26 @@
 
 from osv import osv, fields
 
-##############################################################################
-# Parceiro Personalizado
-##############################################################################
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _columns = {
-        'partner_fiscal_type_id': fields.many2one('l10n_br_account.partner.fiscal.type', 'Tipo Fiscal do Parceiro', domain="[('tipo_pessoa','=',tipo_pessoa)]"),
-    }
+        'partner_fiscal_type_id': fields.many2one('l10n_br_account.partner.fiscal.type', 'Tipo Fiscal do Parceiro', domain="[('tipo_pessoa', '=', tipo_pessoa)]"),
+        }
+
 res_partner()
 
-##############################################################################
-# Posição Fiscal Personalizada
-##############################################################################
+
 class account_fiscal_position(osv.osv):
     _inherit = 'account.fiscal.position'
     _columns = {
-                'fiscal_operation_id': fields.many2one('l10n_br_account.fiscal.operation', 'Operação Fiscal'),
-                }
-        
+        'fiscal_operation_id': fields.many2one('l10n_br_account.fiscal.operation', 'Operação Fiscal'),
+        }
+
 account_fiscal_position()
 
+
 class account_fiscal_position_tax(osv.osv):
-    
     _inherit = 'account.fiscal.position.tax'
 
 account_fiscal_position_tax()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
