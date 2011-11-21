@@ -71,8 +71,8 @@ class stock_picking(osv.osv):
     def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
         '''Call after the creation of the invoice line'''
 
-        fiscal_operation_id = fiscal_operation_category_id = False
-
+        fiscal_operation_id = move_line.picking_id.fiscal_operation_id
+        fiscal_operation_category_id = move_line.picking_id.fiscal_operation_category_id
         if move_line.sale_line_id:
             fiscal_operation_id = move_line.sale_line_id.fiscal_operation_id or move_line.sale_line_id.order_id.fiscal_operation_id
             fiscal_operation_category_id = move_line.sale_line_id.fiscal_operation_category_id or move_line.sale_line_id.order_id.fiscal_operation_category_id
@@ -80,10 +80,6 @@ class stock_picking(osv.osv):
         if move_line.purchase_line_id:
             fiscal_operation_id = move_line.purchase_line_id.fiscal_operation_id or move_line.purchase_line_id.order_id.fiscal_operation_id
             fiscal_operation_category_id = move_line.purchase_line_id.fiscal_operation_category_id or move_line.purchase_line_id.order_id.fiscal_operation_category_id
-
-        if not move_line.purchase_line_id and not move_line.sale_line_id:
-            fiscal_operation_id = move_line.picking_id.fiscal_operation_id
-            fiscal_operation_category_id = move_line.picking_id.fiscal_operation_category_id
 
         if not fiscal_operation_id:
             raise osv.except_osv(_(u'Movimentação sem operação fiscal !'), _(u"Não existe operação fiscal para uma linha de vendas relacionada ao produto %s .") % (move_line.product_id.name))
@@ -98,12 +94,10 @@ class stock_picking(osv.osv):
 
     def _invoice_hook(self, cr, uid, picking, invoice_id):
         '''Call after the creation of the invoice'''
-        if not picking.sale_id and not picking.purchase_id:
-            salesman = uid
 
+        salesman = uid
         if picking.sale_id:
             salesman = picking.sale_id.user_id.id
-
         if picking.purchase_id:
             salesman = picking.purchase_id.validator.id
 
@@ -118,14 +112,16 @@ class stock_picking(osv.osv):
         if picking.note:
             comment += ' - ' + picking.note
 
-        self.pool.get('account.invoice').write(cr, uid, invoice_id, {'fiscal_operation_category_id': picking.fiscal_operation_category_id.id,
-                                                                     'fiscal_operation_id': picking.fiscal_operation_id.id,
-                                                                     'cfop_id': picking.fiscal_operation_id.cfop_id.id,
-                                                                     'fiscal_document_id': picking.fiscal_operation_id.fiscal_document_id.id,
-                                                                     'fiscal_position': picking.fiscal_position.id,
-                                                                     'document_serie_id': company_id.document_serie_product_ids[0].id,
-                                                                     'user_id': salesman,
-                                                                     'comment': comment})
+        self.pool.get('account.invoice').write(cr, uid, invoice_id, {
+            'fiscal_operation_category_id': picking.fiscal_operation_category_id.id,
+            'fiscal_operation_id': picking.fiscal_operation_id.id,
+            'cfop_id': picking.fiscal_operation_id.cfop_id.id,
+            'fiscal_document_id': picking.fiscal_operation_id.fiscal_document_id.id,
+            'fiscal_position': picking.fiscal_position.id,
+            'document_serie_id': company_id.document_serie_product_ids[0].id,
+            'user_id': salesman,
+            'comment': comment,
+            })
 
         return super(stock_picking, self)._invoice_hook(cr, uid, picking, invoice_id)
 
