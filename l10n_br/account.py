@@ -3,23 +3,23 @@
 import pooler
 from osv import fields, osv
 
-
-class account_tax_code_common(object):
-    _columns = {
-        'domain': fields.char('Domain', size=32, help="This field is only used if you develop your own module allowing developers to create specific taxes in a custom domain."),
-        'tax_discount': fields.boolean('Tax Discounted in Price', help="Mark it for (ICMS, PIS e etc.)."),
-        'tax_include': fields.boolean('Include the Tax Amount in Price', help="Mark it to include the Tax Amount in Price."),
-        }
+_columns = {
+    'domain': fields.char('Domain', size=32, help="This field is only used if you develop your own module allowing developers to create specific taxes in a custom domain."),
+    'tax_discount': fields.boolean('Tax Discounted in Price', help="Mark it for (ICMS, PIS e etc.)."),
+    'tax_include': fields.boolean('Include the Tax Amount in Price', help="Mark it to include the Tax Amount in Price."),
+    }
 
 
-class account_tax_code_template(account_tax_code_common, osv.osv):
+class account_tax_code_template(osv.osv):
     _inherit = 'account.tax.code.template'
+    _columns = _columns
 
 account_tax_code_template()
 
 
-class account_tax_code(account_tax_code_common, osv.osv):
+class account_tax_code(osv.osv):
     _inherit = 'account.tax.code'
+    _columns = _columns
 
 account_tax_code()
 
