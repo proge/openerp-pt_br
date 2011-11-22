@@ -1,8 +1,11 @@
-import wizard
-import account
-import account_fiscal_position_rule
-import invoice
+
+# the order here matters during install
+
 import l10n_br_account
-import partner
-import product
 import res_company
+import partner
+import account
+import invoice
+import product
+import account_fiscal_position_rule
+import wizard
