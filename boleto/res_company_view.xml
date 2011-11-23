@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
   <data>
+
     <record model="ir.ui.view" id="view_boleto_company_form">
       <field name="name">boleto.company</field>
       <field name="model">res.company</field>
@@ -15,5 +16,6 @@
         </page>
       </field>
     </record>
+
   </data>
 </openerp>

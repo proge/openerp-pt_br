@@ -10,6 +10,6 @@ class res_company(osv.osv):
         'agencia_cedente': fields.char('Agencia', size=6),
         'conta_cedente': fields.char('Conta', size=8),
         'nosso_numero': fields.integer(u'Nosso Número'),
-    }
+        }
 
 res_company()

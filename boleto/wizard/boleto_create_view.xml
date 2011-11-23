@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-        <record id="view_boleto_create" model="ir.ui.view">
-            <field name="name">Cria Boletos</field>
-            <field name="model">account.invoice</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Cria Boletos">
-                    <field name="success"/>
-                    <field name="errors"/>
-                    <group col="4" colspan="4">
-                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button icon="gtk-ok" name="create" string="Cria boletos" type="object"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-    </data>
+  <data>
+
+    <record id="view_boleto_create" model="ir.ui.view">
+      <field name="name">Cria Boletos</field>
+      <field name="model">account.invoice</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Cria Boletos">
+          <field name="success"/>
+          <field name="errors"/>
+          <group col="4" colspan="4">
+            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+            <button icon="gtk-ok" name="create" string="Cria boletos" type="object"/>
+          </group>
+        </form>
+      </field>
+    </record>
+
+  </data>
 </openerp>

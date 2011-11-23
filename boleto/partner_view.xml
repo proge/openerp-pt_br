@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
+
     <record model="ir.ui.view" id="view_l10n_br_base_partner_form">
       <field name="name">l10n_br_base.partner.form</field>
       <field name="model">res.partner</field>
@@ -11,5 +12,6 @@
         </field>
       </field>
     </record>
+
   </data>
 </openerp>

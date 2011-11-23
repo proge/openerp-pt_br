@@ -12,7 +12,7 @@ class boleto_partner_config(osv.osv):
         'juros': fields.float('Juros', digits=(1, 6)),
         'multa': fields.float('Multa', digits=(12, 6)),
         'instrucoes': fields.text(u'Instruções'),
-    }
+        }
 
 boleto_partner_config()
 
@@ -40,6 +40,6 @@ class boleto_boleto(osv.osv):
         'valor': fields.float('Valor', digits=(12, 6)),
         'numero_documento': fields.date(u'Número do Documento'),
         'endereco': fields.char(u'Endereço', size=20),
-    }
+        }
 
 boleto_boleto()

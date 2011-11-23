@@ -16,7 +16,7 @@
         'partner_view.xml',
         'res_company_view.xml',
         'wizard/boleto_create_view.xml',
-    ],
+        ],
     'demo_xml': [],
     'test': [],
     'installable': True,

@@ -30,9 +30,10 @@ class boleto_create(osv.osv_memory):
     }
 
     def create(self, cr, uid, ids, context=None):
-    	inv_obj = self.pool.get('account.invoice').browse(cr, uid, ids)
-    	rec_ids = inv_obj._get_receivable_lines(cr, uid, ids)
-    	for move_line in self.pool.get('account.move.line').browse(cr, uid, rec_ids):
+        inv_obj = self.pool.get('account.invoice').browse(cr, uid, ids)
+        rec_ids = inv_obj._get_receivable_lines(cr, uid, ids)
+        for move_line in self.pool.get('account.move.line').browse(cr, uid, rec_ids):
+            pass
 
         success = ''
         error = ''
