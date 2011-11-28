@@ -4,7 +4,7 @@
 
     <record id="view_boleto_create" model="ir.ui.view">
       <field name="name">Cria Boletos</field>
-      <field name="model">account.invoice</field>
+      <field name="model">boleto.create</field>
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Cria Boletos">
