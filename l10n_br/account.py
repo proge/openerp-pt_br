@@ -29,25 +29,27 @@ def change_digit_tax(cr):
     return (16, res + 2)
 
 
+_columns_tax = {
+    'tax_discount': fields.boolean('Tax Discounted in Price', help="Mark it for Brazilian legal Taxes(ICMS, PIS e etc.)."),
+    'tax_add': fields.boolean('Add the Tax Amount in Price', help="Mark it to add the Tax Amount in Price."),
+    'tax_include': fields.boolean('Include the Tax Amount in Price', help="Mark it to include the Tax Amount in Price."),
+    'tax_retain': fields.boolean('Discount the Tax Amount in Price', help="Mark it to for clients who retain the Taxes."),
+    'base_reduction': fields.float('Redution', required=True, digits_compute=change_digit_tax, help="Um percentual decimal em % entre 0-1."),
+    'amount_mva': fields.float('MVA Percent', required=True, digits_compute=change_digit_tax, help="Um percentual decimal em % entre 0-1."),
+    'type': fields.selection([('percent', 'Percentage'), ('fixed', 'Fixed Amount'),
+                              ('none', 'None'), ('code', 'Python Code'),
+                              ('balance', 'Balance'), ('quantity', 'Quantity')], 'Tax Type', required=True,
+                             help="The computation method for the tax amount."),
+    }
+
+_defaults_tax = {
+    'base_reduction': 0,
+    'amount_mva': 0,
+    }
+
+
 class account_tax_common(object):
     tax_code_name = 'account.tax.code.template'
-
-    _columns = {
-        'tax_discount': fields.boolean('Tax Discounted in Price', help="Mark it for Brazilian legal Taxes(ICMS, PIS e etc.)."),
-        'tax_add': fields.boolean('Add the Tax Amount in Price', help="Mark it to add the Tax Amount in Price."),
-        'tax_include': fields.boolean('Include the Tax Amount in Price', help="Mark it to include the Tax Amount in Price."),
-        'tax_retain': fields.boolean('Discount the Tax Amount in Price', help="Mark it to for clients who retain the Taxes."),
-        'base_reduction': fields.float('Redution', required=True, digits_compute=change_digit_tax, help="Um percentual decimal em % entre 0-1."),
-        'amount_mva': fields.float('MVA Percent', required=True, digits_compute=change_digit_tax, help="Um percentual decimal em % entre 0-1."),
-        'type': fields.selection([('percent', 'Percentage'), ('fixed', 'Fixed Amount'),
-                                  ('none', 'None'), ('code', 'Python Code'),
-                                  ('balance', 'Balance'), ('quantity', 'Quantity')], 'Tax Type', required=True,
-                                 help="The computation method for the tax amount."),
-        }
-    _defaults = {
-        'base_reduction': 0,
-        'amount_mva': 0,
-        }
 
     def onchange_tax_code_id(self, cr, uid, ids, tax_code_id, context=None):
         result = {'value': {}}
@@ -66,6 +68,8 @@ class account_tax_common(object):
 class account_tax_template(account_tax_common, osv.osv):
     _inherit = 'account.tax.template'
     tax_code_name = 'account.tax.code.template'
+    _columns = _columns_tax
+    _defaults = _defaults_tax
 
 account_tax_template()
 
@@ -73,6 +77,8 @@ account_tax_template()
 class account_tax(account_tax_common, osv.osv):
     _inherit = 'account.tax'
     tax_code_name = 'account.tax.code'
+    _columns = _columns_tax
+    _defaults = _defaults_tax
 
 account_tax()
 
