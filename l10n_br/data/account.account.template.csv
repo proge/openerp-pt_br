@@ -244,6 +244,8 @@
 "account_template_243","2.1.04.03.0003","PIS a Recolher","account_template_240","other","passivo","True"
 "account_template_244","2.1.04.03.0004","IPI  a Recolher","account_template_240","other","passivo","True"
 "account_template_245","2.1.04.03.0005","ISS a Recolher","account_template_240","other","passivo","True"
+"account_template_245a","2.1.04.03.0006","CSLL a Recolher","account_template_240","other","passivo","True"
+"account_template_245b","2.1.04.03.0007","IRPJ a Recolher","account_template_240","other","passivo","True"
 "account_template_246","2.1.05","PARCELAMENTOS CURTO PRAZO","account_template_194","view","passivo","True"
 "account_template_247","2.1.05.01","PARCELAMENTOS TRIBUTÁRIOS","account_template_246","view","passivo","True"
 "account_template_248","2.1.05.01.0001","COFINS Parcelamento","account_template_247","other","passivo","True"
