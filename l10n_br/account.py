@@ -99,7 +99,8 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         super(wizard_multi_charts_accounts, self).execute(cr, uid, ids, context)
 
         obj_multi = self.browse(cr, uid, ids[0])
-        obj_acc_tax = self.pool.get('account.tax')
+        obj_tax = self.pool.get('account.tax')
+        obj_tax_tmp = self.pool.get('account.tax.template')
         obj_tax_code = self.pool.get('account.tax.code')
         obj_tax_code_tmp = self.pool.get('account.tax.code.template')
 
@@ -107,21 +108,26 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         tax_code_root_id = obj_multi.chart_template_id.tax_code_root_id.id
         company_id = obj_multi.company_id.id
 
-        children_tax_code_template = obj_tax_code_tmp.search(cr, uid, [('parent_id', 'child_of', [tax_code_root_id])], order='id')
-        children_tax_code_template.sort()
-        for tax_code_template in obj_tax_code_tmp.browse(cr, uid, children_tax_code_template, context=context):
+        child_tax_code_temp_ids = obj_tax_code_tmp.search(cr, uid, [('parent_id', 'child_of', [tax_code_root_id])], order='id')
+        child_tax_code_temp_ids.sort()
+        for tax_code_template in obj_tax_code_tmp.browse(cr, uid, child_tax_code_temp_ids, context=context):
             tax_code_id = obj_tax_code.search(cr, uid, [('code', '=', tax_code_template.code),
                                                         ('company_id', '=', company_id)])
             if tax_code_id:
                 obj_tax_code.write(cr, uid, tax_code_id, {'domain': tax_code_template.domain,
+                                                          'notprintable': tax_code_template.notprintable,
                                                           'tax_discount': tax_code_template.tax_discount,
                                                           'tax_include': tax_code_template.tax_include})
 
-        tax_ids = obj_acc_tax.search(cr, uid, [('company_id', '=', company_id)])
-        for tax in obj_acc_tax.browse(cr, uid, tax_ids, context=context):
-            if tax.tax_code_id:
-                obj_acc_tax.write(cr, uid, tax.id, {'domain': tax.tax_code_id.domain,
-                                                    'tax_discount': tax.tax_code_id.tax_discount,
-                                                    'tax_include': tax.tax_code_id.tax_include})
+        tax_ids = obj_tax_tmp.search(cr, uid, [])
+        for tax_template in obj_tax_tmp.browse(cr, uid, tax_ids, context=context):
+            tax_id = obj_tax.search(cr, uid, [('name', '=', tax_template.name)])
+            if tax_template.id:
+                obj_tax.write(cr, uid, tax_id, {'domain': tax_template.tax_code_id.domain,
+                                                'tax_discount': tax_template.tax_discount,
+                                                'price_include': tax_template.price_include,
+                                                'tax_add': tax_template.tax_add,
+                                                'tax_retain': tax_template.tax_retain,
+                                                'tax_include': tax_template.tax_include})
 
 wizard_multi_charts_accounts()
