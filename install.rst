@@ -66,7 +66,7 @@ $ bzr branch lp:openobject-addons/extra-6.0 addons-extra
 $ bzr branch lp:openobject-client-web/6.0 web
 
 And for the localization:
-$ bzr checkout lp:~proge-team/+junk/openerp.pt-br-localiz-proge
+$ git clone https://github.com/proge/openerp-pt_br.git 
 
 Remove l10n_br from addons, the one that comes with OpenERP is incomplete
 
@@ -80,7 +80,7 @@ $ exit
 
 Create a virtualenv to isolate OpenERP from the rest of the system
 $ virtualenv --no-site-packages -p python2.6 oerp_venv
-$ ./oerp_venv/bin/pip install -r openerp.pt-br-localiz-proge/requirements.txt
+$ ./oerp_venv/bin/pip install -r openerp-pt_br/requirements.txt
 
 The first time you start the OpenERP server you will pass some
 parameters that get written to ~/.openerp_serverrc
@@ -97,7 +97,7 @@ and openerp.pt-br-localiz-proge) separated by ",". For example, if my
 install directory was /home/me/openerp the line should read:
 
 addons_path =
-/home/me/openerp/server/bin/addons,/home/me/openerp/addons,/home/me/openerp/addons-extra,/home/me/openerp/openerp.pt-br-localiz-proge
+/home/me/openerp/server/bin/addons,/home/me/openerp/addons,/home/me/openerp/addons-extra,/home/me/openerp/openerp-pt_br
 
 Now save the file (ctrl+o in nano, cmd+s in textedit) and exit the
 editor.
