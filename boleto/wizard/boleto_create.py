@@ -98,12 +98,14 @@ class boleto_create(osv.osv_memory):
         partner_ad = partner.address[0]
 
         for bol in boleto_obj.browse(cr, uid, boleto_ids, context=context):
-            boleto = {
-                'bb': lambda: BoletoBB(7, 2),
-                'bradesco': lambda: BoletoBradesco(),
-                'caixa': lambda: BoletoCaixa(),
-                'real': lambda: BoletoReal()
-            }[bol.banco]()
+            if bol.banco == 'bb':
+                boleto = BoletoBB(7, 2)
+            elif bol.banco == 'bradesco':
+                boleto = BoletoBradesco()
+            elif bol.banco == 'caixa':
+                boleto = BoletoCaixa()
+            elif bol.banco == 'real':
+                boleto = BoletoReal()
 
             boleto.cedente = company.name
             boleto.carteira = bol.carteira
