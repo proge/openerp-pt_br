@@ -3,20 +3,32 @@
   <data>
 
     <record id="view_boleto_create" model="ir.ui.view">
-      <field name="name">Cria Boletos</field>
-      <field name="model">boleto.create</field>
-      <field name="type">form</field>
-      <field name="arch" type="xml">
-        <form string="Cria Boletos">
-          <field name="success"/>
-          <field name="errors"/>
-          <group col="4" colspan="4">
-            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-            <button icon="gtk-ok" name="create" string="Cria boletos" type="object"/>
-          </group>
-        </form>
-      </field>
+        <field name="name">Gerar Boletos</field>
+        <field name="model">boleto.boleto_create</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Gerar Boletos">
+                <field name="state" invisible="1"/>
+                <group states="init" col="4" colspan="4">
+                    <field name="state" invisible="1"/>
+                    <field name="boleto_company_config_ids"/>
+                    <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                    <button icon="gtk-ok" name="create_boleto" string="Gerar boletos" type="object"/>
+                </group>
+                <group colspan="8" col="8" states="done">
+                    <field name="file"/>
+                    <button special="cancel" string="Fechar" icon="gtk-go-forward"/>
+                </group>
+            </form>
+        </field>
     </record>
+
+    <act_window id="wiz_boleto_create"
+      key2="client_action_multi" name="Gerar Boletos"
+      res_model="boleto.boleto_create" src_model="account.invoice"
+      view_id="view_boleto_create"
+      view_mode="form" target="new" view_type="form"
+      groups="base.group_extended"/>
 
   </data>
 </openerp>

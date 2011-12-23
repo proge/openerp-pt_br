@@ -5,13 +5,11 @@
     <record model="ir.ui.view" id="view_boleto_company_form">
       <field name="name">boleto.company</field>
       <field name="model">res.company</field>
-      <field name="inherit_id" ref="base.view_company_form" />
+      <field name="inherit_id" ref="l10n_br_account.view_l10n_br_account_company_form" />
       <field name="arch" type="xml">
         <page position="after" string="NFse">
           <page position="after" string="Boletos">
-            <field name="banco" />
-            <field name="agencia_cedente" />
-            <field name="conta_cedente" />
+            <field name="boleto_company_config_ids"/>
           </page>
         </page>
       </field>

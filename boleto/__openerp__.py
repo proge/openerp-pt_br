@@ -3,11 +3,14 @@
 {
     "name": "Boletos",
     "version": "0.1",
-    "author": "Proge",
+    "author": "PROGE",
     "category": "Account",
     "website": "http://proge.com.br",
     "description": """
-    Module to create boletos
+    Module to create brazilian boletos.
+    Company Boleto conf in menu Administration->Company->l10n_br->boletos
+    Partner Boleto conf in Partner form.
+    Wizard to generate boletos in Invoice form.
     """,
     'depends': ['l10n_br_account'],
     'init_xml': [],

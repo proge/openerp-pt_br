@@ -6,10 +6,7 @@ from osv import osv, fields
 class res_company(osv.osv):
     _inherit = "res.company"
     _columns = {
-        'banco': fields.selection([('bb', 'Banco do Brasil'), ('real', 'Banco Real')], 'Banco'),
-        'agencia_cedente': fields.char('Agencia', size=6),
-        'conta_cedente': fields.char('Conta', size=8),
-        'nosso_numero': fields.integer(u'Nosso Número'),
+        'boleto_company_config_ids': fields.many2many('boleto.company_config', 'res_company_boleto_rel', 'company_id', 'boleto_company_config_id', u'Configurações de Boleto da Empresa')
         }
 
 res_company()
